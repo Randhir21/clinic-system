@@ -83,7 +83,9 @@ const Setting = () => {
 
     fetchData();
   }, [sDate, eDate]);
-
+ const totalAmount=data.length > 0
+  ? data.reduce((acc, student) => acc + student.fee, 0)
+  : null;
   return (
     <>
       <Card>
@@ -175,13 +177,7 @@ const Setting = () => {
                       <TableCell align="left">{row.fee}</TableCell>
                     </TableRow>
                   ))}
-                  {data.reduce((acc, cur) => (
-                    // <Grid style={{display:"flex" , justifyContent: "flex-end"}}>
-                    //   <Typography align="left" p={2} style={{border: "1.5px solid #c3bebe61", width: "300px",fontSize: "20px"}}>
-                    //   Total Amount:
-                    //   {acc.fee+cur.fee} /-
-                    // </Typography>
-                    // </Grid>
+                  
 
                     <TableRow
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -193,10 +189,10 @@ const Setting = () => {
                         Total Amount:
                       </TableCell>
                       <TableCell align="left" style={{ fontSize: "18px" }}>
-                        {acc.fee + cur.fee} /-
+                        {totalAmount} /-
                       </TableCell>
                     </TableRow>
-                  ))}
+               
                 </TableBody>
               </Table>
             </TableContainer>
