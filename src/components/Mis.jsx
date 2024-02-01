@@ -86,7 +86,7 @@ const Setting = () => {
 
   return (
     <>
-      <Card>
+      <Card className="misStyle">
         <CardContent>
           <Typography align="center" style={customStyles}>
             --- MIS ---
