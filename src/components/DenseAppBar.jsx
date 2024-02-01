@@ -18,7 +18,7 @@ export default function DenseAppBar() {
   const updateOpen=useAppStore((state)=>state.updateOpen);
   const dopen=useAppStore((state)=>state.dopen);
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box  sx={{ flexGrow: 1 }}>
       <AppBar position="fixed">
         <Toolbar variant="dense">
           <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={()=>updateOpen(!dopen)}>

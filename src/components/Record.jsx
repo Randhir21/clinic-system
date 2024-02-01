@@ -93,8 +93,8 @@ export default function Record() {
   };
 
   return (
-    <Paper className='recordStyle' sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ maxHeight: 560 }}>
+    <Paper className='recordStyle' >
+      <TableContainer className='recordTable'>
         <Table stickyHeader aria-label="sticky table">
           <TableHead >
             <TableRow >
