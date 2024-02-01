@@ -5,16 +5,19 @@ import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Home from './components/Home.jsx'
 import Record from './components/Record.jsx'
-import Setting from './components/Setting.jsx'
+
+import Mis from './components/Mis.jsx'
+
 
 const router= createBrowserRouter(
   [
     {
       path: "/",
       element: <App />,
+      
       children: [
         {
-          path: "",
+          path: "/",
           element: <Home />
         },
         {
@@ -22,9 +25,10 @@ const router= createBrowserRouter(
           element: <Record />
         },
         {
-          path: "/setting",
-          element: <Setting />
-        }
+          path: "/mis",
+          element: <Mis />
+        },
+       
 
       ]
     }
@@ -33,6 +37,5 @@ const router= createBrowserRouter(
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <RouterProvider router={router} />
-   
   </React.StrictMode>,
 )

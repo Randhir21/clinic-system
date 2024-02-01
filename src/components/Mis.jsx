@@ -24,7 +24,7 @@ import {
 import { app } from "./firebase";
 import { useReactToPrint } from "react-to-print";
 
-const Setting = () => {
+const Mis = () => {
   const firestore = getFirestore(app);
   const customStyles = {
     fontSize: "22px", // Set your desired font size
@@ -34,6 +34,7 @@ const Setting = () => {
   const [eDate, setEDate] = useState("");
   const [showValidationMessage, setShowValidationMessage] = useState(false);
   const [data, setData] = useState([]);
+  // const [tAmount, setTAmount] = useState([])
   const componentRef = React.useRef();
 
   const handlePrint = useReactToPrint({
@@ -75,6 +76,7 @@ const Setting = () => {
 
           console.log("Result:", result);
           setData(result);
+          
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -84,9 +86,15 @@ const Setting = () => {
     fetchData();
   }, [sDate, eDate]);
 
+  
+  const totalAmount=data.length > 0
+  ? data.reduce((acc, student) => acc + student.fee, 0)
+  : null;
+  // setTAmount(totalAmount)
+
   return (
     <>
-      <Card>
+      <Card className="misStyle">
         <CardContent>
           <Typography align="center" style={customStyles}>
             --- MIS ---
@@ -172,17 +180,11 @@ const Setting = () => {
                       <TableCell align="left">{index + 1}</TableCell>
                       <TableCell align="left">{row.name}</TableCell>
                       <TableCell align="left">{row.date}</TableCell>
-                      <TableCell align="left">{row.fee}</TableCell>
+                      <TableCell align="left">{row.fee} /-</TableCell>
                     </TableRow>
                   ))}
-                  {data.reduce((acc, cur) => (
-                    // <Grid style={{display:"flex" , justifyContent: "flex-end"}}>
-                    //   <Typography align="left" p={2} style={{border: "1.5px solid #c3bebe61", width: "300px",fontSize: "20px"}}>
-                    //   Total Amount:
-                    //   {acc.fee+cur.fee} /-
-                    // </Typography>
-                    // </Grid>
-
+                  
+                    
                     <TableRow
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
@@ -193,10 +195,10 @@ const Setting = () => {
                         Total Amount:
                       </TableCell>
                       <TableCell align="left" style={{ fontSize: "18px" }}>
-                        {acc.fee + cur.fee} /-
+                      {totalAmount} /-
                       </TableCell>
                     </TableRow>
-                  ))}
+                 
                 </TableBody>
               </Table>
             </TableContainer>
@@ -207,4 +209,4 @@ const Setting = () => {
   );
 };
 
-export default Setting;
+export default Mis;

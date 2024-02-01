@@ -66,7 +66,13 @@ export default function Record() {
     try {
       const querySnapshot = await getDocs(collection(firestore, "paitent"));
       const result = querySnapshot.docs.map((doc) => doc.data());
-      setData(result)
+      const compareDates = (a, b) => {
+        const dateA = new Date(a.date);
+        const dateB = new Date(b.date);
+        return dateB - dateA; // Sort in descending order (latest date first)
+      };
+      const sortedData=result.sort(compareDates);
+      setData(sortedData)
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -87,7 +93,7 @@ export default function Record() {
   };
 
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+    <Paper className='recordStyle' sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 560 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead >

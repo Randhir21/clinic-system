@@ -7,64 +7,74 @@ import {
   Typography,
   RadioGroup,
   FormControlLabel,
-  Radio
+  Radio,
 } from "@mui/material";
 import React, { useState } from "react";
-import { getFirestore,collection, addDoc } from "firebase/firestore"; 
-import {app} from './firebase';
-
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { app } from "./firebase";
+const customCssCode = `
+border-color: red;
+/* Add any other custom styles as needed */
+`;
 const Home = () => {
-  const fee=500;
- 
+  const fee = 500;
+  
   const [inputValues, setInputValues] = useState({
-    name: '',
-    guardian: '',
-    age: '',
-    gendar: '',
-    add: '',
-    po: '',
-    ps: '',
-    dist: '',
-    pin: '',
-    state: '',
-    date: new Date().toJSON().slice(0,10),
-    fee
+    name: "",
+    guardian: "",
+    age: "",
+    gendar: "",
+    add: "",
+    po: "",
+    ps: "",
+    dist: "",
+    pin: "",
+    state: "",
+    date: new Date().toJSON().slice(0, 10),
+    fee,
   });
-
- 
 
   // Function to handle input changes
   const handleInputChange = (e) => {
-    
     const { name, value } = e.target;
     setInputValues((prevValues) => ({
       ...prevValues,
       [name]: value,
     }));
-  };
     
-  const firestore = getFirestore(app);
-  const writeData= async(e)=>{
-    e.preventDefault();
-    const result=await addDoc(collection(firestore, "paitent"),inputValues);
-    console.log("Result :" , result);
-    setInputValues({
-      name: '',
-      guardian: '',
-      age: '',
-      gendar: '',
-      add: '',
-      po: '',
-      ps: '',
-      dist: '',
-      pin: '',
-      state: '',
-    });
-  }
+  };
+ 
 
+  const firestore = getFirestore(app);
+  const writeData = async (e) => {
+    e.preventDefault();
+    if (!inputValues.name || !inputValues.guardian || !inputValues.age || !inputValues.gendar || !inputValues.add || !inputValues.po || !inputValues.ps || !inputValues.dist || !inputValues.pin || !inputValues.state) {
+      // You can display an error message or handle the validation failure in any way you prefer
+      console.error('Please fill out all required fields.');
+      alert("Please fill out all required fields")
+      
+      return;
+    }
+    
+    const result = await addDoc(collection(firestore, "paitent"), inputValues);
+    console.log("Result :", result);
+    setInputValues({
+      name: "",
+      guardian: "",
+      age: "",
+      gendar: "",
+      add: "",
+      po: "",
+      ps: "",
+      dist: "",
+      pin: "",
+      state: "",
+    });
+  };
+ 
   return (
     <>
-      <Card>
+      <Card className="homeStyle">
         <CardContent>
           <Grid container sapcing={0}>
             <Grid xs={12} sm={6} md={4} item p={1}>
@@ -76,6 +86,7 @@ const Home = () => {
                 name="name"
                 value={inputValues.name}
                 onChange={handleInputChange}
+                
               />
             </Grid>
             <Grid xs={12} sm={6} md={4} item p={1}>
@@ -87,11 +98,12 @@ const Home = () => {
                 name="guardian"
                 value={inputValues.guardian}
                 onChange={handleInputChange}
+                
               />
             </Grid>
             <Grid xs={12} sm={6} md={4} item p={1}>
               <TextField
-              type="number"
+                type="number"
                 label="Age"
                 placeholder="Enter your Age"
                 variant="outlined"
@@ -99,33 +111,43 @@ const Home = () => {
                 name="age"
                 value={inputValues.age}
                 onChange={handleInputChange}
+                
               />
             </Grid>
-            
-            
           </Grid>
           <Grid container>
-                
-              <Grid xs={12} sm={6} md={4} item p={1}>
-              <Grid sx={{display: "flex"}}>
-                  <Typography py={1} mr={3}>Gendar:</Typography>
-                  <RadioGroup
-                    aria-labelledby="demo-radio-buttons-group-label"
-                    name="gendar"
-                    value={inputValues.gendar}
-                    onChange={handleInputChange}
-                    
-                    
-                  >
-                      <Grid sx={{display: "flex"}}>
-                      <FormControlLabel value="female" control={<Radio />} label="Female" />
-                      <FormControlLabel value="male" control={<Radio />} label="Male" />
-                      <FormControlLabel value="other" control={<Radio />} label="Other" />
-                      </Grid>
-                  </RadioGroup>
-
-                </Grid>
-                </Grid>
+            <Grid xs={12} sm={6} md={4} item p={1}>
+              <Grid sx={{ display: "flex" }}>
+                <Typography py={1} mr={3}>
+                  Gendar:
+                </Typography>
+                <RadioGroup
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  name="gendar"
+                  value={inputValues.gendar}
+                  onChange={handleInputChange}
+                  
+                >
+                  <Grid sx={{ display: "flex" }}>
+                    <FormControlLabel
+                      value="female"
+                      control={<Radio />}
+                      label="Female"
+                    />
+                    <FormControlLabel
+                      value="male"
+                      control={<Radio />}
+                      label="Male"
+                    />
+                    <FormControlLabel
+                      value="other"
+                      control={<Radio />}
+                      label="Other"
+                    />
+                  </Grid>
+                </RadioGroup>
+              </Grid>
+            </Grid>
           </Grid>
           <Typography p={1}>Address:</Typography>
 
@@ -141,6 +163,7 @@ const Home = () => {
                 name="add"
                 value={inputValues.add}
                 onChange={handleInputChange}
+              
               />
             </Grid>
             <Grid xs={12} sm={6} md={4} item p={1}>
@@ -152,6 +175,7 @@ const Home = () => {
                 name="po"
                 value={inputValues.po}
                 onChange={handleInputChange}
+                
               />
             </Grid>
             <Grid xs={12} sm={6} md={4} item p={1}>
@@ -163,6 +187,7 @@ const Home = () => {
                 name="ps"
                 value={inputValues.ps}
                 onChange={handleInputChange}
+                
               />
             </Grid>
             <Grid xs={12} sm={6} md={4} item p={1}>
@@ -174,6 +199,7 @@ const Home = () => {
                 name="dist"
                 value={inputValues.dist}
                 onChange={handleInputChange}
+                
               />
             </Grid>
             <Grid xs={12} sm={6} md={4} item p={1}>
@@ -186,6 +212,7 @@ const Home = () => {
                 name="pin"
                 value={inputValues.pin}
                 onChange={handleInputChange}
+                
               />
             </Grid>
             <Grid xs={12} sm={6} md={4} item p={1}>
@@ -197,6 +224,7 @@ const Home = () => {
                 name="state"
                 value={inputValues.state}
                 onChange={handleInputChange}
+                
               />
             </Grid>
           </Grid>
@@ -208,7 +236,7 @@ const Home = () => {
                 disabled
                 variant="outlined"
                 fullWidth
-                
+
               />
             </Grid>
             {/* <Grid xs={12} sm={6} md={4} item p={1}>
@@ -222,12 +250,15 @@ const Home = () => {
                 fullWidth
               />
             </Grid> */}
-            
           </Grid>
           <Grid container>
-            
             <Grid xs={12} sm={6} md={4} item p={1}>
-              <Button onClick={writeData} variant="contained" size="large" fullWidth>
+              <Button
+                onClick={writeData}
+                variant="contained"
+                size="large"
+                fullWidth
+              >
                 Submit
               </Button>
             </Grid>
